@@ -1,13 +1,13 @@
 typedef struct rsm
 {
-    double *w;
-    double *b;
-    int *v;
-    int *h;
-    int nw;
-    int nb;
-    int nv;
-    int nh;
+    double *w;  // weights array
+    double *b;  // biases array
+    int *v;     // visible layer 
+    int *h;     // hidden layer
+    int nw;     // number of weights 
+    int nb;     // number of biases
+    int nv;     // number of visible units
+    int nh;     // number of hidden units
 } RSM_t;
 
 RSM_t rsm_build(const int nv, const int nh);
