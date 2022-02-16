@@ -1,11 +1,11 @@
 #include "rsm.h"
 
-double sigmoid()
+double sigmoid(const double x) 
 {
-    return 0;
+    sig = 1 / (1 + exp(-x));
+    return sig;
 }
 
-double sigmoid();
 
 RSM_t rsm_build(const int nvis, const int nhid)
 {
@@ -20,4 +20,24 @@ RSM_t rsm_build(const int nvis, const int nhid)
     rsm_nn.h = (int *) calloc(rsm_nn.nh, sizeof(rsm_nn.h));
     
     return rsm_nn;
+}
+
+void rsm_save(const RSM_t rsm_nn, const char * path)
+{
+
+}
+
+RSM_t rsm_load(const char * path)
+{
+
+}
+
+void rsm_print(const double * arr, const int size)
+{
+
+}
+
+void rsm_free(const RSM_t rsm_nn)
+{
+
 }
