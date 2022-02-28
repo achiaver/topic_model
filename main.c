@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "parameters.h"
 
 int main(int argc, char *argv[])
 {
-    printf("Hello, World!\n");
+    fprintf(stdout, "Hello,\n");
+    fprintf(stdout, "Tests...\n");
+
     return EXIT_SUCCESS;
 }

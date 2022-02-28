@@ -8,3 +8,8 @@ typedef struct data
     int nh;
     int rows;
 } DATA_t;
+
+typedef struct parameters
+{
+    
+} PARAM_t;

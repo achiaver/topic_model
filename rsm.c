@@ -6,7 +6,7 @@ double sigmoid(const double x)
     return sig;
 }
 
-double * visible_to_hidden(const RMS_t rsm_nn, )
+double * sample_hidden_from_visible(const RMS_t rsm_nn, )
 {
     double h[rsm_nn.nh] = {0.0};
     for (int i = 0; i < rsm_nn.nh; i++)

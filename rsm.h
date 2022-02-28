@@ -17,4 +17,4 @@ void rsm_print(const double * arr, const int size);
 void rsm_free(const RSM_t rsm_nn);
 
 int * rsm_train(const RSM_t rsm_nn, const int * in);
-int * rsm_model(const RSM_t rsm_nn, const int * in);
+int * rsm_predict(const RSM_t rsm_nn, const int * in);
