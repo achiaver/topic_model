@@ -4,8 +4,17 @@
 
 int main(int argc, char *argv[])
 {
-    fprintf(stdout, "Hello,\n");
-    fprintf(stdout, "Tests...\n");
+    if (argc < 2)
+    {
+        fprintf(stdout, "./topic_model <PARAMETERS FILE>");
+        exit(2);
+    }
+
+//    fprintf(stdout, "Hello,\n");
+//    fprintf(stdout, "Tests...\n");
+
+    PARAM_t *parameters = parameters_readin(argv[1]); 
+    parameters_print(parameters);
 
     return EXIT_SUCCESS;
 }

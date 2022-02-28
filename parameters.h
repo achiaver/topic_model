@@ -16,7 +16,7 @@ typedef struct parameters
 
 PARAM_t *parameters_create(void);
 PARAM_t *parameters_readin(char *filename);
-void     parameters_delete(const PARAM_t parameters);
-void     parameters_print(const PARAM_t paraneters);
+void     parameters_delete(PARAM_t *parameters);
+void     parameters_print(const PARAM_t *paraneters);
 
 #endif

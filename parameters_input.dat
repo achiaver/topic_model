@@ -2,8 +2,8 @@ dataset_filename    data/example.data   <string>
 weights_filename    data/weights.data   <string>
 biases_filename     data/biases.data    <string>
 dataset_rows        5                   <integer>
-dataset_cols        4                   <integer>
-number_weights      8                   <integer>
-number_biases       6                   <integer>
-number_visible      4                   <integer>
+dataset_cols        9                   <integer>
+number_weights      18                   <integer>
+number_biases       11                   <integer>
+number_visible      9                   <integer>
 number_hidden       2                   <integer>

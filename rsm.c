@@ -1,22 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include "rsm.h"
 
 double sigmoid(const double x) 
 {
-    sig = 1 / (1 + exp(-x));
-    return sig;
+    return 1 / (1 + exp(-x));
 }
 
-double * sample_hidden_from_visible(const RMS_t rsm_nn, )
+double * sample_hidden_from_visible(const RSM_t rsm_nn )
 {
-    double h[rsm_nn.nh] = {0.0};
+    double *h = calloc(rsm_nn.nh, sizeof(double*));
     for (int i = 0; i < rsm_nn.nh; i++)
     {
         double sum = 0;
         for (int j = 0; j < rsm_nn.nv; j++)
         {
-            sum += 
+            continue;
         }
     }
+    return h;
 }
 
 
@@ -86,6 +89,4 @@ void rsm_free(const RSM_t rsm_nn)
     free(rsm_nn.w);
     free(rsm_nn.b);
     free(rsm_nn.v);
-    free(rsm_nn.h);
-    rsm_nn = NULL;
-}
+ 
