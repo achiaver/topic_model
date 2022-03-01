@@ -84,9 +84,10 @@ void rsm_print(const double * arr, const int size)
 
 }
 
-void rsm_free(const RSM_t rsm_nn)
+void rsm_free(RSM_t rsm_nn)
 {
     free(rsm_nn.w);
     free(rsm_nn.b);
     free(rsm_nn.v);
+}
  

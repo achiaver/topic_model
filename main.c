@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "parameters.h"
+#include <include/parameters.h>
 
 int main(int argc, char *argv[])
 {
