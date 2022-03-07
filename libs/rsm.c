@@ -8,7 +8,7 @@ double sigmoid(const double x)
     return 1 / (1 + exp(-x));
 }
 
-double * sample_hidden_from_visible(const RSM_t rsm_nn )
+double * sample_hidden_from_visible(const RSM_t rsm_nn)
 {
     double *h = calloc(rsm_nn.nh, sizeof(double*));
     for (int i = 0; i < rsm_nn.nh; i++)
@@ -16,7 +16,7 @@ double * sample_hidden_from_visible(const RSM_t rsm_nn )
         double sum = 0;
         for (int j = 0; j < rsm_nn.nv; j++)
         {
-            continue;
+            sum += rsm_nn.v[j] * rsm_nn.w[(j * rsm_nn.nv) + i];
         }
     }
     return h;

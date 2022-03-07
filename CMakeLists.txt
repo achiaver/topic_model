@@ -4,8 +4,11 @@ project(topic_model VERSION 0.0.1)
 
 configure_file(main.h.in main.h)
 
+
 add_subdirectory(libs)
 add_executable(${CMAKE_PROJECT_NAME} main.c)
+
+target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC libs)
 
 target_include_directories(${CMAKE_PROJECT_NAME}
                         PUBLIC
