@@ -11,14 +11,21 @@ double sigmoid(const double x)
 double * sample_hidden_from_visible(const RSM_t rsm_nn)
 {
     double *h = calloc(rsm_nn.nh, sizeof(double*));
-    for (int i = 0; i < rsm_nn.nh; i++)
+    double aux;
+    for (int j = 0; j < rsm_nn.nh; j++)
     {
         double sum = 0;
-        for (int j = 0; j < rsm_nn.nv; j++)
+        for (int i = 0; i < rsm_nn.nv; i++)
         {
-            sum += rsm_nn.v[j] * rsm_nn.w[(j * rsm_nn.nv) + i];
+            sum += rsm_nn.v[i] * rsm_nn.w[(i * rsm_nn.nh) + j];
         }
+        h[j] = sigmoid(sum + rsm_nn.b[rsm_nn.nv + j]);
+        if (h[j] >= RANDOMentre0e1)
+            h[j] = 1.0;
+        else
+            h[j] = 0.0;
     }
+
     return h;
 }
 
