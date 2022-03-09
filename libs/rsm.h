@@ -1,3 +1,5 @@
+#include "ran3.h"
+
 typedef struct rsm
 {
     double *w;  // weights array

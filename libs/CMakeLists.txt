@@ -4,6 +4,8 @@ add_library(libs
     parameters.c
     parameters.h
     rsm.c
-    rsm.h)
+    rsm.h
+    ran3.c
+    ran3.h)
 
 target_include_directories(libs PUBLIC .)

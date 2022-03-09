@@ -3,6 +3,10 @@
 #include <math.h>
 #include "rsm.h"
 
+
+#define ISEED -42
+
+
 double sigmoid(const double x) 
 {
     return 1 / (1 + exp(-x));
@@ -20,7 +24,7 @@ double * sample_hidden_from_visible(const RSM_t rsm_nn)
             sum += rsm_nn.v[i] * rsm_nn.w[(i * rsm_nn.nh) + j];
         }
         h[j] = sigmoid(sum + rsm_nn.b[rsm_nn.nv + j]);
-        if (h[j] >= RANDOMentre0e1)
+        if (h[j] >= random_0to1(&ISEED))
             h[j] = 1.0;
         else
             h[j] = 0.0;
