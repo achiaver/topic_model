@@ -11,6 +11,12 @@ double sigmoid(const double x)
     return 1 / (1 + exp(-x));
 }
 
+double softmax()
+{
+    
+}
+
+
 double * sample_hidden_from_visible(const RSM_t *rsm_nn)
 {
     double *h = calloc(rsm_nn->nh, sizeof(double*));
@@ -21,7 +27,7 @@ double * sample_hidden_from_visible(const RSM_t *rsm_nn)
         {
             sum += rsm_nn->v[i] * rsm_nn->w[(i * rsm_nn->nh) + j];
         }
-        h[j] = sigmoid(sum + rsm_nn->b[rsm_nn->nv + j]);
+        h[j] = sigmoid(sum + D * rsm_nn->b[rsm_nn->nv + j]);
         
         if (h[j] >= rand_1(&iseed))
         {
