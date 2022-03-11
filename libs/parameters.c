@@ -33,6 +33,7 @@ PARAM_t *parameters_readin(char *filename)
          %*s%d%*s \
          %*s%d%*s \
          %*s%d%*s \
+         %*s%d%*s \
          %*s%d%*s",
         parameters->dataset_filename,
         parameters->weights_filename,
@@ -42,7 +43,8 @@ PARAM_t *parameters_readin(char *filename)
         &parameters->num_weights,
         &parameters->num_biases,
         &parameters->num_vis,
-        &parameters->num_hid);
+        &parameters->num_hid,
+        &parameters->doc_size);
     fclose(file);
     if (parameters->num_vis != parameters->dataset_cols)
     {
@@ -87,4 +89,5 @@ void parameters_print(const PARAM_t *parameters)
     fprintf(stdout, "Number of Biases: %d\n", parameters->num_biases);
     fprintf(stdout, "Number of Visible units: %d\n", parameters->num_vis); 
     fprintf(stdout, "Number of Hidden units: %d\n", parameters->num_hid); 
+    fprintf(stdout, "Document size: %d\n", parameters->doc_size);
 }

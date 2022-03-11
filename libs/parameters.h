@@ -12,9 +12,10 @@ typedef struct parameters
     int num_biases;
     int num_vis;
     int num_hid;
+    int doc_size;
 } PARAM_t;
 
-PARAM_t *parameters_create(void);
+PARAM_t *parameters_create();
 PARAM_t *parameters_readin(char *filename);
 void     parameters_delete(PARAM_t *parameters);
 void     parameters_print(const PARAM_t *paraneters);

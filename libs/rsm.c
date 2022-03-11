@@ -11,9 +11,25 @@ double sigmoid(const double x)
     return 1 / (1 + exp(-x));
 }
 
-double softmax()
+double softmax(const double *h, const int nh, const double *w, const double *a)
 {
-    
+    double m;
+    double sum;
+    double constant;
+    int while_count = 0;
+    // Find maximum of all hidden units each can only be 1
+    // If no hidden unit is active, then m is 0
+
+    m = 0.0;
+    while (while_count < nh)
+    {
+        if (h[while_count] == 1.0)
+        {
+            m = 1.0;
+            break;
+        }
+    }
+
 }
 
 
@@ -27,8 +43,10 @@ double * sample_hidden_from_visible(const RSM_t *rsm_nn)
         {
             sum += rsm_nn->v[i] * rsm_nn->w[(i * rsm_nn->nh) + j];
         }
-        h[j] = sigmoid(sum + D * rsm_nn->b[rsm_nn->nv + j]);
-        
+        // NEED TO ADD D to RSM_t struct!!!!!!!
+
+        h[j] = sigmoid(sum + rsm_nn->d * rsm_nn->b[rsm_nn->nv + j]);         
+
         if (h[j] >= rand_1(&iseed))
         {
             h[j] = 1.0;
@@ -43,31 +61,34 @@ double * sample_hidden_from_visible(const RSM_t *rsm_nn)
 
 double * sample_visible_from_hidden(const RSM_t *rsm_nn)
 {
-    double *v = calloc(rsm_nn->nv, sizeof(double*));
+    double *v = calloc(rsm_nn->nv, sizeof(double *));
+    double *temp_v = calloc(rsm_nn->nv, sizeof(double *));
     for (int i = 0; i < rsm_nn->nv; i++)
     {
-        double sum = 0.0;
-        for (int j = 0; j < rsm_nn->nh; j++)
-        {
-            sum += rsm_nn->h[j] * rsm_nn->w[(i * rsm_nn->nh) + j];
-        }
-        v[i] = sigmoid(sum + rsm_nn->b[i]);
-
-        if (v[i] >= rand_1(&iseed))
-        {}
-        else
-        {}
+//        double sum = 0.0;
+//        for (int j = 0; j < rsm_nn->nh; j++)
+//        {
+//            sum += rsm_nn->h[j] * rsm_nn->w[(i * rsm_nn->nh) + j];
+//        }
+//        sum       
     }
+    
+    if (v[i] >= rand_1(&iseed))
+    {}
+    else
+    {}
+    
 }
 
 
-RSM_t *rsm_build(const int nv, const int nh)
+RSM_t *rsm_build(const int nv, const int nh, const int doc_size)
 {
     RSM_t *rsm_nn;
     rsm_nn->nb = nv + nh;
     rsm_nn->nw = nv * nh;
     rsm_nn->nv = nv;
     rsm_nn->nh = nh;
+    rsm_nn->d = doc_size;
     rsm_nn->w = (double *) calloc(rsm_nn->nw, sizeof(*rsm_nn->w));
     rsm_nn->b = (double *) calloc(rsm_nn->nb, sizeof(*rsm_nn->b));
     rsm_nn->v = (int *) calloc(rsm_nn->nv, sizeof(*rsm_nn->v));
@@ -102,7 +123,7 @@ RSM_t *rsm_load(const char * path)
 
     fscanf(file, "%d %d\n", &nv, &nh);
 
-    const RSM_t *rsm_nn = rsm_build(nv, nh);
+    RSM_t *rsm_nn = rsm_build(nv, nh);
 
     for(int i = 0; i <= rsm_nn->nb; i++)
     {
