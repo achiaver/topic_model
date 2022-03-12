@@ -90,4 +90,5 @@ void parameters_print(const PARAM_t *parameters)
     fprintf(stdout, "Number of Visible units: %d\n", parameters->num_vis); 
     fprintf(stdout, "Number of Hidden units: %d\n", parameters->num_hid); 
     fprintf(stdout, "Document size: %d\n", parameters->doc_size);
+    fprintf(stdout, "\n");
 }

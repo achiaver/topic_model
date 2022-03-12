@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "ran3.h"
 #include "rsm.h"
 
 
@@ -34,9 +35,6 @@ double softmax(double *z, int nv, int k)
     
     return exp(z[k] - m - log(sum_exp));
 }
-
-double
-
 
 double * sample_hidden_from_visible(const RSM_t *rsm_nn)
 {
@@ -101,7 +99,7 @@ double * sample_visible_from_hidden(const RSM_t *rsm_nn)
 
 RSM_t *rsm_build(const int nv, const int nh, const int doc_size)
 {
-    RSM_t *rsm_nn;
+    RSM_t *rsm_nn = malloc(sizeof(*rsm_nn));
     rsm_nn->nb = nv + nh;
     rsm_nn->nw = nv * nh;
     rsm_nn->nv = nv;
@@ -112,6 +110,16 @@ RSM_t *rsm_build(const int nv, const int nh, const int doc_size)
     rsm_nn->v = (int *) calloc(rsm_nn->nv, sizeof(*rsm_nn->v));
     rsm_nn->h = (int *) calloc(rsm_nn->nh, sizeof(rsm_nn->h));
     
+    for (int l = 0; l < rsm_nn->nw; l++)
+    {
+        rsm_nn->w[l] = rand_1(&iseed);
+    }
+    
+    for (int m = 0; m < rsm_nn->nb; m++)
+    {
+        rsm_nn->b[m] = rand_1(&iseed);
+    }
+
     return rsm_nn;
 }
 
@@ -156,9 +164,37 @@ RSM_t *rsm_load(const char * path)
     return rsm_nn;
 }
 
-void rsm_print(const double * arr, const int size)
+void rsm_print(const RSM_t *rsm_nn)
 {
+    fprintf(stdout, "*===== Replicated Softmax Setup =====*\n");
+    fprintf(stdout, "Number of visible units: %d\n", rsm_nn->nv);
+    fprintf(stdout, "Number of hidden units: %d\n", rsm_nn->nh);
+    fprintf(stdout, "Number of weights: %d\n", rsm_nn->nw);
+    fprintf(stdout, "Number of biases: %d\n\n", rsm_nn->nb);
 
+    fprintf(stdout, "*======== Weights and Biases ========*\n");
+    fprintf(stdout, "Weights - \n");
+    for (int k = 0; k < rsm_nn->nv; k++)
+    {
+        for (int j = 0; j < rsm_nn->nh; j++)
+        {
+            fprintf(stdout, "%4.6lf\t", rsm_nn->w[(k * rsm_nn->nh) + j]);
+        }
+        fprintf(stdout, "\n");
+    }
+    fprintf(stdout, "\n");
+
+    fprintf(stdout, "Biases - \n");
+    for (int k = 0; k < rsm_nn->nv; k++)
+    {
+        fprintf(stdout, "%4.6lf\t", rsm_nn->b[k]);
+    }
+    fprintf(stdout, "\n");
+    for (int j = 0; j < rsm_nn->nh; j++)
+    {
+        fprintf(stdout, "%4.6lf\t", rsm_nn->b[rsm_nn->nv + j]);
+    }
+    fprintf(stdout, "\n\n");
 }
 
 void rsm_free(RSM_t *rsm_nn)
