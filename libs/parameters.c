@@ -40,11 +40,11 @@ PARAM_t *parameters_readin(char *filename)
         parameters->biases_filename,
         &parameters->dataset_rows,
         &parameters->dataset_cols,
-        &parameters->num_weights,
-        &parameters->num_biases,
+        &parameters->doc_size,
         &parameters->num_vis,
         &parameters->num_hid,
-        &parameters->doc_size);
+        &parameters->num_weights,
+        &parameters->num_biases);
     fclose(file);
     if (parameters->num_vis != parameters->dataset_cols)
     {
@@ -85,10 +85,10 @@ void parameters_print(const PARAM_t *parameters)
     fprintf(stdout, "Biases filename: %s\n", parameters->biases_filename);
     fprintf(stdout, "Number of Rows in Dataset: %d\n", parameters->dataset_rows);      
     fprintf(stdout, "Number of Cols in Dataset: %d\n", parameters->dataset_cols);
-    fprintf(stdout, "Number of Weights: %d\n", parameters->num_weights);
-    fprintf(stdout, "Number of Biases: %d\n", parameters->num_biases);
+    fprintf(stdout, "Document size: %d\n", parameters->doc_size);
     fprintf(stdout, "Number of Visible units: %d\n", parameters->num_vis); 
     fprintf(stdout, "Number of Hidden units: %d\n", parameters->num_hid); 
-    fprintf(stdout, "Document size: %d\n", parameters->doc_size);
+    fprintf(stdout, "Number of Weights: %d\n", parameters->num_weights);
+    fprintf(stdout, "Number of Biases: %d\n", parameters->num_biases);
     fprintf(stdout, "\n");
 }

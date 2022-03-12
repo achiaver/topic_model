@@ -4,8 +4,8 @@ typedef struct rsm
 {
     double *w;  // weights array
     double *b;  // biases array
-    int *v;     // visible layer 
-    int *h;     // hidden layer
+    double *v;     // visible layer 
+    double *h;     // hidden layer
     int nw;     // number of weights 
     int nb;     // number of biases
     int nv;     // number of visible units
@@ -21,3 +21,5 @@ void rsm_free(RSM_t *rsm_nn);
 
 int * rsm_train(RSM_t *rsm_nn, const int * in);
 int * rsm_predict(RSM_t *rsm_nn, const int * in);
+double * sample_hidden_from_visible(const RSM_t *rsm_nn);
+double * sample_visible_from_hidden(const RSM_t *rsm_nn);

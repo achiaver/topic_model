@@ -8,11 +8,11 @@ typedef struct parameters
     char biases_filename[256];
     int dataset_rows;
     int dataset_cols;
-    int num_weights;
-    int num_biases;
+    int doc_size;
     int num_vis;
     int num_hid;
-    int doc_size;
+    int num_weights;
+    int num_biases;
 } PARAM_t;
 
 PARAM_t *parameters_create();

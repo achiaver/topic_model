@@ -46,9 +46,8 @@ double * sample_hidden_from_visible(const RSM_t *rsm_nn)
         {
             sum += rsm_nn->v[i] * rsm_nn->w[(i * rsm_nn->nh) + j];
         }
-        // NEED TO ADD D to RSM_t struct!!!!!!!
-
         h[j] = sigmoid(sum + rsm_nn->d * rsm_nn->b[rsm_nn->nv + j]);         
+        fprintf(stdout, "p_h%d = %lf\n", j, h[j]);
 
         if (h[j] >= rand_1(&iseed))
         {
@@ -83,7 +82,7 @@ double * sample_visible_from_hidden(const RSM_t *rsm_nn)
     for (int k = 0; k < rsm_nn->nv; k++)
     {
         temp_v[k] = softmax(z, rsm_nn->nv, k);
-
+        fprintf(stdout, "p_v%d = %lf\n", k, temp_v[k]);
         for (int i = 0; i < rsm_nn->d; i++)
         {
             if (temp_v[k] >= rand_1(&iseed))
@@ -92,7 +91,8 @@ double * sample_visible_from_hidden(const RSM_t *rsm_nn)
             }
         }
     }
-    
+    free(temp_v);
+    free(z);
     return v;
 }
 
@@ -107,8 +107,8 @@ RSM_t *rsm_build(const int nv, const int nh, const int doc_size)
     rsm_nn->d = doc_size;
     rsm_nn->w = (double *) calloc(rsm_nn->nw, sizeof(*rsm_nn->w));
     rsm_nn->b = (double *) calloc(rsm_nn->nb, sizeof(*rsm_nn->b));
-    rsm_nn->v = (int *) calloc(rsm_nn->nv, sizeof(*rsm_nn->v));
-    rsm_nn->h = (int *) calloc(rsm_nn->nh, sizeof(rsm_nn->h));
+    rsm_nn->v = (double *) calloc(rsm_nn->nv, sizeof(*rsm_nn->v));
+    rsm_nn->h = (double *) calloc(rsm_nn->nh, sizeof(rsm_nn->h));
     
     for (int l = 0; l < rsm_nn->nw; l++)
     {
@@ -125,6 +125,7 @@ RSM_t *rsm_build(const int nv, const int nh, const int doc_size)
 
 void rsm_save(const RSM_t *rsm_nn, const char * path)
 {
+    fprintf(stdout, "*===== Saving RSM =====*\n"); 
     FILE * const file = fopen(path, "w");
     fprintf(file, "%d %d\n", rsm_nn->nv, rsm_nn->nh);
     fprintf(stdout, "Saving weights to file: %s\n", path); 
@@ -139,12 +140,13 @@ void rsm_save(const RSM_t *rsm_nn, const char * path)
         fprintf(file, "%lf\n", rsm_nn->b[i]);
     }
     
-    fprintf(stdout, "*===== Save weights and biases complete =====*\n\n");
+    fprintf(stdout, "*===== Saving complete =====*\n\n");
     fclose(file);
 }
 
 RSM_t *rsm_load(const char * path)
 {
+    fprintf(stdout, "*===== Loading RSM =====*\n"); 
     FILE * const file = fopen(path, "r");
     int nv = 0;
     int nh = 0;
@@ -152,18 +154,21 @@ RSM_t *rsm_load(const char * path)
     fscanf(file, "%d %d\n", &nv, &nh);
 
     RSM_t *rsm_nn = rsm_build(nv, nh, 0);
-
+    
+    fprintf(stdout, "Reading in weights from file: %s\n", path);
     for(int i = 0; i < rsm_nn->nw; i++)
     {
         fscanf(file, "%lf\n", &rsm_nn->w[i]);
     }
-
+    
+    fprintf(stdout, "Reading in biases from file: %s\n", path);
     for(int i = 0; i < rsm_nn->nb; i++)
     {
         fscanf(file, "%lf\n", &rsm_nn->b[i]);
     }
 
     fclose(file);
+    fprintf(stdout, "*===== Loading complete =====*\n\n");
     return rsm_nn;
 }
 
@@ -175,8 +180,6 @@ void rsm_print(const RSM_t *rsm_nn)
     fprintf(stdout, "Number of hidden units: %d\n", rsm_nn->nh);
     fprintf(stdout, "Number of weights: %d\n", rsm_nn->nw);
     fprintf(stdout, "Number of biases: %d\n\n", rsm_nn->nb);
-
-    fprintf(stdout, "*======== Weights and Biases ========*\n");
     fprintf(stdout, "Weights - \n");
     for (int k = 0; k < rsm_nn->nv; k++)
     {
@@ -191,12 +194,11 @@ void rsm_print(const RSM_t *rsm_nn)
     fprintf(stdout, "Biases - \n");
     for (int k = 0; k < rsm_nn->nv; k++)
     {
-        fprintf(stdout, "%4.6lf\t", rsm_nn->b[k]);
+        fprintf(stdout, "%4.6lf\n", rsm_nn->b[k]);
     }
-    fprintf(stdout, "\n");
     for (int j = 0; j < rsm_nn->nh; j++)
     {
-        fprintf(stdout, "%4.6lf\t", rsm_nn->b[rsm_nn->nv + j]);
+        fprintf(stdout, "%4.6lf\n", rsm_nn->b[rsm_nn->nv + j]);
     }
     fprintf(stdout, "\n\n");
 }
