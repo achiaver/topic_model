@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(topic_model VERSION 0.0.1)
+project(topic_model VERSION 0.0.1 LANGUAGE C)
 
 configure_file(main.h.in main.h)
 

@@ -11,26 +11,31 @@ double sigmoid(const double x)
     return 1 / (1 + exp(-x));
 }
 
-double softmax(const double *h, const int nh, const double *w, const double *a)
+double softmax(double *z, int nv, int k)
 {
-    double m;
-    double sum;
-    double constant;
-    int while_count = 0;
-    // Find maximum of all hidden units each can only be 1
-    // If no hidden unit is active, then m is 0
-
-    m = 0.0;
-    while (while_count < nh)
+    double m = -INFINITY;
+    double sum_exp = 0.0;
+   
+    // Find maximum value of weighted sum above
+    for (int i = 0; i < nv; i++)
     {
-        if (h[while_count] == 1.0)
+        if (m < z[i])
         {
-            m = 1.0;
-            break;
+            m = z[i];
         }
     }
 
+    // Computation of normalization factor
+    // denominator of softmax
+    for (int i = 0; i < nv; i++)
+    {
+        sum_exp += exp(z[i] - m);
+    }
+    
+    return exp(z[k] - m - log(sum_exp));
 }
+
+double
 
 
 double * sample_hidden_from_visible(const RSM_t *rsm_nn)
@@ -61,23 +66,36 @@ double * sample_hidden_from_visible(const RSM_t *rsm_nn)
 
 double * sample_visible_from_hidden(const RSM_t *rsm_nn)
 {
-    double *v = calloc(rsm_nn->nv, sizeof(double *));
+    double *v = calloc(rsm_nn->nv, sizeof(double *)); 
     double *temp_v = calloc(rsm_nn->nv, sizeof(double *));
-    for (int i = 0; i < rsm_nn->nv; i++)
+    double *z = calloc(rsm_nn->nv, sizeof(double *));
+    // Computation of weighted sum of inputs to visible units
+    for (int k = 0; k < rsm_nn->nv; k++)
     {
-//        double sum = 0.0;
-//        for (int j = 0; j < rsm_nn->nh; j++)
-//        {
-//            sum += rsm_nn->h[j] * rsm_nn->w[(i * rsm_nn->nh) + j];
-//        }
-//        sum       
+        double sum = 0.0;
+        for (int j = 0; j < rsm_nn->nh; j++)
+        {
+            sum += rsm_nn->h[j] * rsm_nn->w[(k * rsm_nn->nh) + j];
+        }
+        z[k] = sum + rsm_nn->b[k]; 
     }
     
-    if (v[i] >= rand_1(&iseed))
-    {}
-    else
-    {}
+    // Compute softmax for each visible and 
+    // sample d (doc_size) each visible unit
+    for (int k = 0; k < rsm_nn->nv; k++)
+    {
+        temp_v[k] = softmax(z, rsm_nn->nv, k);
+
+        for (int i = 0; i < rsm_nn->d; i++)
+        {
+            if (temp_v[k] >= rand_1(&iseed))
+            {
+                v[k] += 1.0;
+            }
+        }
+    }
     
+    return v;
 }
 
 
@@ -123,14 +141,14 @@ RSM_t *rsm_load(const char * path)
 
     fscanf(file, "%d %d\n", &nv, &nh);
 
-    RSM_t *rsm_nn = rsm_build(nv, nh);
+    RSM_t *rsm_nn = rsm_build(nv, nh, 0);
 
-    for(int i = 0; i <= rsm_nn->nb; i++)
+    for(int i = 0; i < rsm_nn->nb; i++)
     {
         fscanf(file, "%lf\n", &rsm_nn->b[i]);
     }
 
-    for(int i = 0; i <= rsm_nn->nw; i++)
+    for(int i = 0; i < rsm_nn->nw; i++)
     {
         fscanf(file, "%lf\n", &rsm_nn->w[i]);
     }
