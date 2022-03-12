@@ -139,7 +139,7 @@ void rsm_save(const RSM_t *rsm_nn, const char * path)
         fprintf(file, "%lf\n", rsm_nn->b[i]);
     }
     
-    fprintf(stdout, "*===== Save weights and biases complete =====*\n");
+    fprintf(stdout, "*===== Save weights and biases complete =====*\n\n");
     fclose(file);
 }
 
@@ -153,21 +153,23 @@ RSM_t *rsm_load(const char * path)
 
     RSM_t *rsm_nn = rsm_build(nv, nh, 0);
 
+    for(int i = 0; i < rsm_nn->nw; i++)
+    {
+        fscanf(file, "%lf\n", &rsm_nn->w[i]);
+    }
+
     for(int i = 0; i < rsm_nn->nb; i++)
     {
         fscanf(file, "%lf\n", &rsm_nn->b[i]);
     }
 
-    for(int i = 0; i < rsm_nn->nw; i++)
-    {
-        fscanf(file, "%lf\n", &rsm_nn->w[i]);
-    }
     fclose(file);
     return rsm_nn;
 }
 
 void rsm_print(const RSM_t *rsm_nn)
 {
+    fprintf(stdout, "\n");
     fprintf(stdout, "*===== Replicated Softmax Setup =====*\n");
     fprintf(stdout, "Number of visible units: %d\n", rsm_nn->nv);
     fprintf(stdout, "Number of hidden units: %d\n", rsm_nn->nh);
