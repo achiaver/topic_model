@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
 
 
     rsm_print(rsm_nn);
+    rsm_save(rsm_nn, parameters->weights_filename);
     rsm_free(rsm_nn);
 
     return EXIT_SUCCESS;

@@ -127,17 +127,19 @@ void rsm_save(const RSM_t *rsm_nn, const char * path)
 {
     FILE * const file = fopen(path, "w");
     fprintf(file, "%d %d\n", rsm_nn->nv, rsm_nn->nh);
-    
-    for(int i = 0; i <= rsm_nn->nb; i++)
-    {
-        fprintf(file, "%lf\n", rsm_nn->b[i]);
-    }
-
-    for(int i = 0; i <= rsm_nn->nw; i++)
+    fprintf(stdout, "Saving weights to file: %s\n", path); 
+    for(int i = 0; i < rsm_nn->nw; i++)
     {
         fprintf(file, "%lf\n", rsm_nn->w[i]);
     }
 
+    fprintf(stdout, "Saving biases to file: %s\n", path);  
+    for(int i = 0; i < rsm_nn->nb; i++)
+    {
+        fprintf(file, "%lf\n", rsm_nn->b[i]);
+    }
+    
+    fprintf(stdout, "*===== Save weights and biases complete =====*\n");
     fclose(file);
 }
 
