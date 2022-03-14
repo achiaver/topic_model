@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "ran3.h"
 #include "rsm.h"
 
-
-int iseed = -42;
+//random_seed(0);
 
 double sigmoid(const double x) 
 {
@@ -49,7 +47,7 @@ double * sample_hidden_from_visible(const RSM_t *rsm_nn)
         h[j] = sigmoid(sum + rsm_nn->d * rsm_nn->b[rsm_nn->nv + j]);         
         fprintf(stdout, "p_h%d = %lf\n", j, h[j]);
 
-        if (h[j] >= rand_1(&iseed))
+        if (h[j] >= random_1())
         {
             h[j] = 1.0;
         }
@@ -85,7 +83,7 @@ double * sample_visible_from_hidden(const RSM_t *rsm_nn)
         fprintf(stdout, "p_v%d = %lf\n", k, temp_v[k]);
         for (int i = 0; i < rsm_nn->d; i++)
         {
-            if (temp_v[k] >= rand_1(&iseed))
+            if (temp_v[k] >= random_1())
             {
                 v[k] += 1.0;
             }
@@ -95,6 +93,8 @@ double * sample_visible_from_hidden(const RSM_t *rsm_nn)
     free(z);
     return v;
 }
+
+
 
 
 RSM_t *rsm_build(const int nv, const int nh, const int doc_size)
@@ -112,12 +112,12 @@ RSM_t *rsm_build(const int nv, const int nh, const int doc_size)
     
     for (int l = 0; l < rsm_nn->nw; l++)
     {
-        rsm_nn->w[l] = rand_1(&iseed);
+        rsm_nn->w[l] = random_1();
     }
     
     for (int m = 0; m < rsm_nn->nb; m++)
     {
-        rsm_nn->b[m] = rand_1(&iseed);
+        rsm_nn->b[m] = random_1();
     }
 
     return rsm_nn;

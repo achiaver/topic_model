@@ -5,7 +5,9 @@ add_library(libs
     parameters.h
     rsm.c
     rsm.h
-    ran3.c
-    ran3.h)
+    random_lib.c
+    random_lib.h
+    pcg_basic.c
+    pcg_basic.h)
 
 target_include_directories(libs PUBLIC .)

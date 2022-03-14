@@ -8,6 +8,7 @@ int main(int argc, char *argv[])
         fprintf(stdout, "./topic_model <PARAMETERS FILE>\n");
         exit(2);
     }
+    random_seed(0);
 
 
     PARAM_t *parameters = parameters_readin(argv[1]); 

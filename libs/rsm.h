@@ -1,4 +1,4 @@
-#include "ran3.h"
+#include "random_lib.h"
 
 typedef struct rsm
 {
