@@ -33,14 +33,12 @@ PARAM_t *parameters_readin(char *filename)
          %*s%d%*s \
          %*s%d%*s \
          %*s%d%*s \
-         %*s%d%*s \
          %*s%d%*s",
         parameters->dataset_filename,
         parameters->weights_filename,
         parameters->biases_filename,
         &parameters->dataset_rows,
         &parameters->dataset_cols,
-        &parameters->doc_size,
         &parameters->num_vis,
         &parameters->num_hid,
         &parameters->num_weights,
