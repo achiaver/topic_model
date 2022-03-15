@@ -90,7 +90,7 @@ void data_dump(DATA_t *dataset)
     fprintf(stdout, "*===== Dataset Dump =====*\n\n");
     for (int row = 0; row < dataset->rows; row++)
     {
-        fprintf(stdout, "[%6d] - ", row);
+        fprintf(stdout, "[%6d] -\t", row);
         for (int col = 0; col < dataset->cols; col++)
         {
             fprintf(stdout, "%6.1f\t", dataset->inputs[(row * dataset->cols) + col]);
