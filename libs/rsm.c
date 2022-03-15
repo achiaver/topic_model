@@ -95,8 +95,6 @@ double * sample_visible_from_hidden(const RSM_t *rsm_nn)
 }
 
 
-
-
 RSM_t *rsm_build(const int nv, const int nh, const int doc_size)
 {
     RSM_t *rsm_nn = malloc(sizeof(*rsm_nn));

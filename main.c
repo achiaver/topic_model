@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 
 
     PARAM_t *parameters = parameters_readin(argv[1]); 
-    parameters_print(parameters);
+    char *dataset_path = argv[2];    parameters_print(parameters);
 
 //    RSM_t *rsm_nn = rsm_build(parameters->num_vis, parameters->num_hid, 0);
 
