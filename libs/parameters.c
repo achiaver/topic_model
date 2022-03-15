@@ -83,7 +83,6 @@ void parameters_print(const PARAM_t *parameters)
     fprintf(stdout, "Biases filename: %s\n", parameters->biases_filename);
     fprintf(stdout, "Number of Rows in Dataset: %d\n", parameters->dataset_rows);      
     fprintf(stdout, "Number of Cols in Dataset: %d\n", parameters->dataset_cols);
-    fprintf(stdout, "Document size: %d\n", parameters->doc_size);
     fprintf(stdout, "Number of Visible units: %d\n", parameters->num_vis); 
     fprintf(stdout, "Number of Hidden units: %d\n", parameters->num_hid); 
     fprintf(stdout, "Number of Weights: %d\n", parameters->num_weights);
