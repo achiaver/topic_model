@@ -5,12 +5,12 @@
 
 //random_seed(0);
 
-double sigmoid(const double x) 
+double sigmoid (const double x) 
 {
     return 1 / (1 + exp(-x));
 }
 
-double softmax(double *z, int nv, int k)
+double softmax (double *z, int nv, int k)
 {
     double m = -INFINITY;
     double sum_exp = 0.0;
@@ -34,7 +34,7 @@ double softmax(double *z, int nv, int k)
     return exp(z[k] - m - log(sum_exp));
 }
 
-double * sample_hidden_from_visible(const RSM_t *rsm_nn)
+double * sample_hidden_from_visible (const RSM_t *rsm_nn)
 {
     double *h = calloc(rsm_nn->nh, sizeof(double*));
     for (int j = 0; j < rsm_nn->nh; j++)
@@ -59,7 +59,7 @@ double * sample_hidden_from_visible(const RSM_t *rsm_nn)
     return h;
 }
 
-double * sample_visible_from_hidden(const RSM_t *rsm_nn)
+double * sample_visible_from_hidden (const RSM_t *rsm_nn)
 {
     double *v = calloc(rsm_nn->nv, sizeof(double *)); 
     double *temp_v = calloc(rsm_nn->nv, sizeof(double *));
@@ -95,7 +95,16 @@ double * sample_visible_from_hidden(const RSM_t *rsm_nn)
 }
 
 
-RSM_t *rsm_build(const int nv, const int nh)
+
+
+void rsm_train(RSM_t *rsm_nn, const PARAM_t *parameters, const DATA_t *dataset)
+{
+
+}
+
+
+
+RSM_t *rsm_build (const int nv, const int nh)
 {
     RSM_t *rsm_nn = malloc(sizeof(*rsm_nn));
     rsm_nn->nb = nv + nh;
@@ -121,7 +130,7 @@ RSM_t *rsm_build(const int nv, const int nh)
     return rsm_nn;
 }
 
-void rsm_save(const RSM_t *rsm_nn, const char * path)
+void rsm_save (const RSM_t *rsm_nn, const char * path)
 {
     fprintf(stdout, "*===== Saving RSM =====*\n"); 
     FILE * const file = fopen(path, "w");
@@ -142,7 +151,7 @@ void rsm_save(const RSM_t *rsm_nn, const char * path)
     fclose(file);
 }
 
-RSM_t *rsm_load(const char * path)
+RSM_t *rsm_load (const char * path)
 {
     fprintf(stdout, "*===== Loading RSM =====*\n"); 
     FILE * const file = fopen(path, "r");
@@ -170,7 +179,7 @@ RSM_t *rsm_load(const char * path)
     return rsm_nn;
 }
 
-void rsm_print(const RSM_t *rsm_nn)
+void rsm_print (const RSM_t *rsm_nn)
 {
     fprintf(stdout, "\n");
     fprintf(stdout, "*===== Replicated Softmax Setup =====*\n");
@@ -201,7 +210,7 @@ void rsm_print(const RSM_t *rsm_nn)
     fprintf(stdout, "\n\n");
 }
 
-void rsm_free(RSM_t *rsm_nn)
+void rsm_free (RSM_t *rsm_nn)
 {
     free(rsm_nn->w);
     free(rsm_nn->b);

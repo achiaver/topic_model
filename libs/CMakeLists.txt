@@ -1,6 +1,4 @@
 add_library(libs 
-    utils.c
-    utils.h
     parameters.c
     parameters.h
     rsm.c

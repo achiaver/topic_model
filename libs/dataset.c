@@ -8,7 +8,7 @@
  *  -> cols = set of dimensions, each col is one input to a single 
  *            node (cols = number of visible nodes)
  *
- * DATA_t definitions can be found on matrix.h
+ * DATA_t definitions can be found on dataset.h
  * 
  *
  * =============================================================================

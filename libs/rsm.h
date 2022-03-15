@@ -1,4 +1,6 @@
 #include "random_lib.h"
+#include "parameters.h"
+#include "dataset.h"
 
 typedef struct rsm
 {
@@ -19,7 +21,7 @@ RSM_t *rsm_load(const char * path);
 void rsm_print(const RSM_t *rsm_nn);
 void rsm_free(RSM_t *rsm_nn);
 
-int * rsm_train(RSM_t *rsm_nn, const int * in);
-int * rsm_predict(RSM_t *rsm_nn, const int * in);
-double * sample_hidden_from_visible(const RSM_t *rsm_nn);
-double * sample_visible_from_hidden(const RSM_t *rsm_nn);
+void rsm_train(RSM_t *rsm_nn, const PARAM_t *parameters, const DATA_t *dataset);
+void rsm_predict(RSM_t *rsm_nn, const DATA_t *dataset, double *visible);
+double *sample_hidden_from_visible(const RSM_t *rsm_nn);
+double *sample_visible_from_hidden(const RSM_t *rsm_nn);
