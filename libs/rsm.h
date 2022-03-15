@@ -13,7 +13,7 @@ typedef struct rsm
     int d;
 } RSM_t;
 
-RSM_t *rsm_build(const int nv, const int nh, const int doc_size);
+RSM_t *rsm_build(const int nv, const int nh);
 void rsm_save(const RSM_t *rsm_nn, const char * path);
 RSM_t *rsm_load(const char * path);
 void rsm_print(const RSM_t *rsm_nn);

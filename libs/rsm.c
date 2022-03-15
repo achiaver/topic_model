@@ -95,16 +95,14 @@ double * sample_visible_from_hidden(const RSM_t *rsm_nn)
 }
 
 
-
-
-RSM_t *rsm_build(const int nv, const int nh, const int doc_size)
+RSM_t *rsm_build(const int nv, const int nh)
 {
     RSM_t *rsm_nn = malloc(sizeof(*rsm_nn));
     rsm_nn->nb = nv + nh;
     rsm_nn->nw = nv * nh;
     rsm_nn->nv = nv;
     rsm_nn->nh = nh;
-    rsm_nn->d = doc_size;
+    rsm_nn->d = 0;
     rsm_nn->w = (double *) calloc(rsm_nn->nw, sizeof(*rsm_nn->w));
     rsm_nn->b = (double *) calloc(rsm_nn->nb, sizeof(*rsm_nn->b));
     rsm_nn->v = (double *) calloc(rsm_nn->nv, sizeof(*rsm_nn->v));
@@ -153,7 +151,7 @@ RSM_t *rsm_load(const char * path)
 
     fscanf(file, "%d %d\n", &nv, &nh);
 
-    RSM_t *rsm_nn = rsm_build(nv, nh, 0);
+    RSM_t *rsm_nn = rsm_build(nv, nh);
     
     fprintf(stdout, "Reading in weights from file: %s\n", path);
     for(int i = 0; i < rsm_nn->nw; i++)
