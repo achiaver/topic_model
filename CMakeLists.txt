@@ -4,7 +4,6 @@ project(topic_model VERSION 0.0.1 LANGUAGES C)
 
 configure_file(main.h.in main.h)
 
-
 add_subdirectory(libs)
 add_executable(${CMAKE_PROJECT_NAME} main.c)
 
