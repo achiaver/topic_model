@@ -87,14 +87,15 @@ void data_free (DATA_t *dataset)
 
 void data_dump(DATA_t *dataset)
 {
-    for (int row = 0; row < m->rows; row++)
+    fprintf(stdout, "*===== Dataset Dump =====*\n\n");
+    for (int row = 0; row < dataset->rows; row++)
     {
-        printf("[%2d] - ", row);
+        fprintf(stdout, "[%6d] - ", row);
         for (int col = 0; col < dataset->cols; col++)
         {
-            printf("%2.0f ", matrix_get(m, row, col));
+            fprintf(stdout, "%6.1f\t", dataset->inputs[(row * dataset->cols) + col]);
         }
-        printf("\n");
+        fprintf(stdout, "\n");
     }
-    printf("\n");
+    fprintf(stdout, "\n");
 } /* end dataset_print */

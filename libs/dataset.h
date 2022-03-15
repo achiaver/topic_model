@@ -12,6 +12,7 @@ typedef struct data
     double *inputs;
 } DATA_t;
 
+DATA_t *data_allocate (int rows, int cols);
 DATA_t *data_readin (char *filename);
 void data_free (DATA_t *dataset);
 void data_dump (DATA_t *dataset);
