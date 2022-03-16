@@ -94,10 +94,13 @@ double * sample_visible_from_hidden (const RSM_t *rsm_nn)
     return v;
 }
 
+void cdk (RSM_t *rsm_nn, double *input, double learning_rate, int ksteps)
+{
+
+}
 
 
-
-void rsm_train(RSM_t *rsm_nn, const PARAM_t *parameters, const DATA_t *dataset)
+void rsm_train (RSM_t *rsm_nn, const DATA_t *dataset, const PARAM_t *parameters)
 {
 
 }
