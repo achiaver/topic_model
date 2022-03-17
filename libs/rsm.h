@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include "random_lib.h"
 #include "parameters.h"
 #include "dataset.h"
@@ -6,8 +9,8 @@ typedef struct rsm
 {
     double *w;  // weights array
     double *b;  // biases array
-    double *v;     // visible layer 
-    double *h;     // hidden layer
+//    double *v;     // visible layer 
+//    double *h;     // hidden layer
     int nw;     // number of weights 
     int nb;     // number of biases
     int nv;     // number of visible units
@@ -23,5 +26,6 @@ void rsm_free (RSM_t *rsm_nn);
 
 void rsm_train (RSM_t *rsm_nn, const DATA_t *dataset, const PARAM_t *parameters);
 void rsm_predict (RSM_t *rsm_nn, const DATA_t *dataset, double *visible);
-double *sample_hidden_from_visible (const RSM_t *rsm_nn);
-double *sample_visible_from_hidden (const RSM_t *rsm_nn);
+double *sample_hidden_from_visible (const RSM_t *rsm_nn, double *v);
+double *sample_visible_from_hidden (const RSM_t *rsm_nn, double *h);
+

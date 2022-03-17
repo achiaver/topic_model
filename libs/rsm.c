@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include "rsm.h"
 
 //random_seed(0);
@@ -34,15 +31,15 @@ double softmax (double *z, int nv, int k)
     return exp(z[k] - m - log(sum_exp));
 }
 
-double * sample_hidden_from_visible (const RSM_t *rsm_nn)
+double * sample_hidden_from_visible (const RSM_t *rsm_nn, double *v)
 {
-    double *h = calloc(rsm_nn->nh, sizeof(double*));
+    double *h = calloc(rsm_nn->nh, sizeof(*h));
     for (int j = 0; j < rsm_nn->nh; j++)
     {
         double sum = 0.0;
         for (int i = 0; i < rsm_nn->nv; i++)
         {
-            sum += rsm_nn->v[i] * rsm_nn->w[(i * rsm_nn->nh) + j];
+            sum += v[i] * rsm_nn->w[(i * rsm_nn->nh) + j];
         }
         h[j] = sigmoid(sum + rsm_nn->d * rsm_nn->b[rsm_nn->nv + j]);         
         fprintf(stdout, "p_h%d = %lf\n", j, h[j]);
@@ -59,18 +56,18 @@ double * sample_hidden_from_visible (const RSM_t *rsm_nn)
     return h;
 }
 
-double * sample_visible_from_hidden (const RSM_t *rsm_nn)
+double * sample_visible_from_hidden (const RSM_t *rsm_nn, double *h)
 {
-    double *v = calloc(rsm_nn->nv, sizeof(double *)); 
-    double *temp_v = calloc(rsm_nn->nv, sizeof(double *));
-    double *z = calloc(rsm_nn->nv, sizeof(double *));
+    double *v = calloc(rsm_nn->nv, sizeof(*v)); 
+    double *temp_v = calloc(rsm_nn->nv, sizeof(*temp_v));
+    double *z = calloc(rsm_nn->nv, sizeof(*z));
     // Computation of weighted sum of inputs to visible units
     for (int k = 0; k < rsm_nn->nv; k++)
     {
         double sum = 0.0;
         for (int j = 0; j < rsm_nn->nh; j++)
         {
-            sum += rsm_nn->h[j] * rsm_nn->w[(k * rsm_nn->nh) + j];
+            sum += h[j] * rsm_nn->w[(k * rsm_nn->nh) + j];
         }
         z[k] = sum + rsm_nn->b[k]; 
     }
@@ -96,7 +93,25 @@ double * sample_visible_from_hidden (const RSM_t *rsm_nn)
 
 void cdk (RSM_t *rsm_nn, double *input, double learning_rate, int ksteps)
 {
+    double *v0 = calloc(rsm_nn->nv, sizeof(*v0));
+    double *h0 = calloc(rsm_nn->nh, sizeof(*h0));
+    double *vk = calloc(rsm_nn->nv, sizeof(*vk));
+    double *hk = calloc(rsm_nn->nh, sizeof(*hk));
 
+    *v0 = *input;
+    h0 = sample_hidden_from_visible(rsm_nn, v0);
+
+    if (ksteps == 1)
+    {
+        vk = sample_visible_from_hidden(rsm_nn, h0);
+        hk = sample_hidden_from_visible(rsm_nn, vk); 
+    }
+    
+
+    free(v0);
+    free(h0);
+    free(vk);
+    free(hk);
 }
 
 
@@ -117,8 +132,8 @@ RSM_t *rsm_build (const int nv, const int nh)
     rsm_nn->d = 0;
     rsm_nn->w = (double *) calloc(rsm_nn->nw, sizeof(*rsm_nn->w));
     rsm_nn->b = (double *) calloc(rsm_nn->nb, sizeof(*rsm_nn->b));
-    rsm_nn->v = (double *) calloc(rsm_nn->nv, sizeof(*rsm_nn->v));
-    rsm_nn->h = (double *) calloc(rsm_nn->nh, sizeof(rsm_nn->h));
+//    rsm_nn->v = (double *) calloc(rsm_nn->nv, sizeof(*rsm_nn->v));
+//    rsm_nn->h = (double *) calloc(rsm_nn->nh, sizeof(rsm_nn->h));
     
     for (int l = 0; l < rsm_nn->nw; l++)
     {
@@ -217,7 +232,7 @@ void rsm_free (RSM_t *rsm_nn)
 {
     free(rsm_nn->w);
     free(rsm_nn->b);
-    free(rsm_nn->v);
+//    free(rsm_nn->v);
     free(rsm_nn);
 }
  

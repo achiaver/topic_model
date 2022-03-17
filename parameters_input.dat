@@ -1,5 +1,5 @@
 dataset_filename    data/example.data   <string> 
-weights_filename    data/weights.data   <string>
+weights_filename    data/weights_test.data   <string>
 biases_filename     data/biases.data    <string>
 dataset_rows        5                   <integer>
 dataset_cols        2                   <integer>
