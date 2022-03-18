@@ -33,7 +33,9 @@ PARAM_t *parameters_readin(char *filename)
          %*s%d%*s \
          %*s%d%*s \
          %*s%d%*s \
-         %*s%d%*s",
+         %*s%d%*s \
+         %*s%d%*s \
+         %*s%lf%*s",
         parameters->dataset_filename,
         parameters->weights_filename,
         parameters->biases_filename,
@@ -42,7 +44,10 @@ PARAM_t *parameters_readin(char *filename)
         &parameters->num_vis,
         &parameters->num_hid,
         &parameters->num_weights,
-        &parameters->num_biases);
+        &parameters->num_biases,
+        &parameters->epochs,
+        &parameters->tsteps,
+        &parameters->learning_rate);
     fclose(file);
     if (parameters->num_vis != parameters->dataset_cols)
     {
@@ -87,5 +92,8 @@ void parameters_print(const PARAM_t *parameters)
     fprintf(stdout, "Number of Hidden units: %d\n", parameters->num_hid); 
     fprintf(stdout, "Number of Weights: %d\n", parameters->num_weights);
     fprintf(stdout, "Number of Biases: %d\n", parameters->num_biases);
+    fprintf(stdout, "Number of Epochs: %d\n", parameters->epochs);
+    fprintf(stdout, "Number of t-steps for CD: %d\n", parameters->tsteps);
+    fprintf(stdout, "Learning Rate: %lf\n", parameters->learning_rate);
     fprintf(stdout, "\n");
 }

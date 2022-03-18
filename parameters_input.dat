@@ -1,10 +1,12 @@
-dataset_filename    data/example.data   <string> 
+dataset_filename    data/example.data        <string> 
 weights_filename    data/weights_test.data   <string>
-biases_filename     data/biases.data    <string>
-dataset_rows        5                   <integer>
-dataset_cols        2                   <integer>
-number_visible      2                   <integer>
-number_hidden       1                   <integer>
-number_weights      2                   <integer>
-number_biases       3                   <integer>
+biases_filename     data/biases.data         <string>
+dataset_rows        5                        <integer>
+dataset_cols        2                        <integer>
+number_visible      2                        <integer>
+number_hidden       1                        <integer>
+number_weights      2                        <integer>
+number_biases       3                        <integer>
+number_epochs       50                       <integer>
+learning_rate       0.0025                   <double>
 

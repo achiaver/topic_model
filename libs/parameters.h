@@ -12,6 +12,9 @@ typedef struct parameters
     int num_hid;
     int num_weights;
     int num_biases;
+    int epochs;
+    int tsteps;
+    double learning_rate;
 } PARAM_t;
 
 PARAM_t *parameters_create();
