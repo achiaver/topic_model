@@ -5,7 +5,7 @@
 
 PARAM_t *parameters_create(void)
 {
-    PARAM_t *parameters = calloc(1, sizeof(parameters));
+    PARAM_t *parameters = malloc(sizeof(*parameters));
     if (!parameters)
     {
         fprintf(stdout, "parameters_create: calloc: \n");
@@ -25,17 +25,18 @@ PARAM_t *parameters_readin(char *filename)
 
     PARAM_t *parameters = parameters_create();
     fscanf(file, 
-        "%*s%s%*s \
-         %*s%s%*s \
-         %*s%s%*s \
-         %*s%d%*s \
-         %*s%d%*s \
-         %*s%d%*s \
-         %*s%d%*s \
-         %*s%d%*s \
-         %*s%d%*s \
-         %*s%d%*s \
-         %*s%lf%*s",
+        "%*s%s \
+         %*s%s \
+         %*s%s \
+         %*s%d \
+         %*s%d \
+         %*s%d \
+         %*s%d \
+         %*s%d \
+         %*s%d \
+         %*s%d \
+         %*s%d \
+         %*s%lf",
         parameters->dataset_filename,
         parameters->weights_filename,
         parameters->biases_filename,
@@ -48,7 +49,7 @@ PARAM_t *parameters_readin(char *filename)
         &parameters->epochs,
         &parameters->tsteps,
         &parameters->learning_rate);
-    fclose(file);
+    
     if (parameters->num_vis != parameters->dataset_cols)
     {
         fprintf(stdout, "parameters_readin: number of visible units and dataset columns should match\n");
@@ -67,6 +68,8 @@ PARAM_t *parameters_readin(char *filename)
         exit(2);
     }
 
+
+    fclose(file);
     return parameters;
 }
 
