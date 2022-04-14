@@ -7,6 +7,7 @@ double sigmoid (const double x)
     return 1 / (1 + exp(-x));
 } /* end sigmoid */
 
+
 double softmax (double *z, int nv, int k)
 {
     double m = -INFINITY;
@@ -20,7 +21,6 @@ double softmax (double *z, int nv, int k)
             m = z[i];
         }
     }
-
     // Computation of normalization factor
     // denominator of softmax
     for (int i = 0; i < nv; i++)
@@ -30,6 +30,7 @@ double softmax (double *z, int nv, int k)
     
     return exp(z[k] - m - log(sum_exp));
 } /* end softmax*/
+
 
 void swap (int *a, int *b)
 {
@@ -48,6 +49,7 @@ void shuffle (int arr[], int n)
         swap(&arr[i], &arr[j]);
     }
 } /* end shuffle */
+
 
 double * sample_hidden_from_visible (const RSM_t *rsm, double *v)
 {
@@ -73,6 +75,7 @@ double * sample_hidden_from_visible (const RSM_t *rsm, double *v)
     }
     return h;
 } /* end sample_hidden_from_visible */
+
 
 double * sample_visible_from_hidden (const RSM_t *rsm, double *h)
 {
@@ -108,6 +111,7 @@ double * sample_visible_from_hidden (const RSM_t *rsm, double *h)
     free(z);
     return v;
 } /* end sample_visible_from_hidden */
+
 
 void update_weights (RSM_t *rsm, double *v0, double *h0, double *vt, double *ht, double learning_rate)
 {
@@ -199,7 +203,6 @@ void rsm_train (RSM_t *rsm, const DATA_t *dataset, const PARAM_t *parameters)
 } /* end rsm_train*/ 
 
 
-
 RSM_t *rsm_build (const int nv, const int nh)
 {
     RSM_t *rsm = malloc(sizeof(*rsm));
@@ -226,6 +229,7 @@ RSM_t *rsm_build (const int nv, const int nh)
     return rsm;
 } /* end rsm_build */
 
+
 void rsm_save (const RSM_t *rsm, const char * path)
 {
     fprintf(stdout, "*===== Saving RSM =====*\n"); 
@@ -246,6 +250,7 @@ void rsm_save (const RSM_t *rsm, const char * path)
     fprintf(stdout, "*===== Saving complete =====*\n\n");
     fclose(file);
 } /* end rsm_save */
+
 
 RSM_t *rsm_load (const char * path)
 {
@@ -274,6 +279,7 @@ RSM_t *rsm_load (const char * path)
     fprintf(stdout, "*===== Loading complete =====*\n\n");
     return rsm;
 } /* end rsm_load */
+
 
 void rsm_print (const RSM_t *rsm)
 {
@@ -305,6 +311,7 @@ void rsm_print (const RSM_t *rsm)
     }
     fprintf(stdout, "\n\n");
 } /* end rsm_print */
+
 
 void rsm_free (RSM_t *rsm)
 {

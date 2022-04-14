@@ -9,8 +9,6 @@ typedef struct rsm_nn
 {
     double *w;  // weights array
     double *b;  // biases array
-//    double *v;     // visible layer 
-//    double *h;     // hidden layer
     int nw;     // number of weights 
     int nb;     // number of biases
     int nv;     // number of visible units
