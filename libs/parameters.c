@@ -3,7 +3,7 @@
 #include "parameters.h"
 
 
-PARAM_t *parameters_create(void)
+PARAM_t *parameters_create (void)
 {
     PARAM_t *parameters = malloc(sizeof(*parameters));
     if (!parameters)
@@ -14,7 +14,7 @@ PARAM_t *parameters_create(void)
     return parameters;
 }
 
-PARAM_t *parameters_readin(char *filename)
+PARAM_t *parameters_readin (char *filename)
 {
     FILE *file = fopen(filename, "r");
     if (!file)
@@ -73,7 +73,7 @@ PARAM_t *parameters_readin(char *filename)
     return parameters;
 }
 
-void parameters_delete(PARAM_t *parameters)
+void parameters_delete (PARAM_t *parameters)
 {
     if (!parameters)
     {
@@ -84,7 +84,7 @@ void parameters_delete(PARAM_t *parameters)
     }
 }
 
-void parameters_print(const PARAM_t *parameters)
+void parameters_print (const PARAM_t *parameters)
 {
     fprintf(stdout, "Dataset filename: %s\n", parameters->dataset_filename);
     fprintf(stdout, "Weights filename: %s\n", parameters->weights_filename);

@@ -17,9 +17,9 @@ typedef struct parameters
     double learning_rate;
 } PARAM_t;
 
-PARAM_t *parameters_create();
-PARAM_t *parameters_readin(char *filename);
-void     parameters_delete(PARAM_t *parameters);
-void     parameters_print(const PARAM_t *paraneters);
+PARAM_t *parameters_create ();
+PARAM_t *parameters_readin (char *filename);
+void     parameters_delete (PARAM_t *parameters);
+void     parameters_print (const PARAM_t *paraneters);
 
 #endif

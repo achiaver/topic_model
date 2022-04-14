@@ -85,7 +85,7 @@ void data_free (DATA_t *dataset)
 
 // dataset_dump display the whole dataset DATA_t in the prompt.
 
-void data_dump(DATA_t *dataset)
+void data_dump (DATA_t *dataset)
 {
     fprintf(stdout, "*===== Dataset Dump =====*\n\n");
     for (int row = 0; row < dataset->rows; row++)
